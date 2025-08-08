@@ -1,4 +1,4 @@
-# Uncluttered.co 🎨  
+# Uncluttered.Co 🎨  
 **Creative Designer for YouTube Thumbnails & Social Media**
 
 ## 🚀 About Us
