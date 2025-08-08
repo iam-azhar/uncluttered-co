@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="./src/Logo.png" type="image/x-icon">
+    <title>UnCluttered.Co - From Script to Screen</title>
+    <meta name="description" content="Professional video production and content creation services. Helping creators and founders transform their vision from script to screen with expert video editing, thumbnails, and social media content.">
+    <meta name="keywords" content="video production, content creation, video editing, thumbnails, social media, creators, founders">
+    <meta name="author" content="UnCluttered.co">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://uncluttered.co.in/">
+    <meta property="og:title" content="UnCluttered.co - Professional Video Production">
+    <meta property="og:description" content="Transform your vision from script to screen with our professional video production services.">
+    
+    <!-- Twitter -->
+    <!-- <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://uncluttered.co/">
+    <meta property="twitter:title" content="UnCluttered.co - Professional Video Production">
+    <meta property="twitter:description" content="Transform your vision from script to screen with our professional video production services."> -->
+    
+    <link rel="canonical" href="https://uncluttered.co.in/">
+    
+    <style>
+        /* CSS Variables and Design System */
+        :root {
+            /* Dark theme colors */
+            --background: 0 0% 7%;
+            --background-alt: 0 0% 10%;
+            --background-card: 0 0% 12%;
+            --foreground: 0 0% 98%;
+            
+            /* Orange brand colors */
+            --primary: 18 94% 60%;
+            --primary-glow: 18 94% 70%;
+            --primary-foreground: 0 0% 98%;
+            
+            /* Neutral colors */
+            --muted: 0 0% 40%;
+            --muted-foreground: 0 0% 70%;
+            --border: 0 0% 20%;
+            --ring: 18 94% 60%;
+            
+            /* Shadows */
+            --shadow-glow: 0 0 40px hsl(18 94% 60% / 0.3);
+            --shadow-card: 0 10px 30px -5px hsl(0 0% 0% / 0.3);
+            
+            /* Radius */
+            --radius: 1rem;
+        }
+
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: hsl(var(--background));
+            color: hsl(var(--foreground));
+            line-height: 1.6;
+        }
+
+        /* Utility Classes */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        @media (min-width: 640px) {
+            .container { padding: 0 1.5rem; }
+        }
+
+        @media (min-width: 1024px) {
+            .container { padding: 0 2rem; }
+        }
+
+        /* Layout Classes */
+        .section {
+            padding: 5rem 0;
+        }
+
+        .glass-card {
+            background: hsl(var(--background-card) / 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid hsl(var(--border));
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-card);
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            box-shadow: var(--shadow-glow);
+            transform: scale(1.02);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
+            color: hsl(var(--primary-foreground));
+            padding: 1rem 2rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 4px 15px hsl(var(--primary) / 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 8px 25px hsl(var(--primary) / 0.4);
+        }
+
+        .glow-text {
+            text-shadow: 0 0 20px hsl(var(--primary) / 0.5);
+        }
+
+        /* Auto-scroll container */
+        .auto-scroll {
+            display: flex;
+            gap: 1.5rem;
+            overflow-x: hidden;
+            padding-bottom: 1rem;
+            position: relative;
+        }
+
+        .auto-scroll-item {
+            min-width: 280px;
+            flex-shrink: 0;
+            transition: transform 0.5s ease;
+        }
+
+        /* Scrollbar utilities */
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Navigation Styles */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            background: transparent;
+        }
+
+        .nav.scrolled {
+            background: hsl(var(--background-card) / 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid hsl(var(--border));
+            box-shadow: var(--shadow-card);
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 0;
+        }
+
+        .nav-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .nav-menu {
+            display: none;
+            align-items: center;
+            gap: 0.75rem;
+            background: hsl(var(--background-card) / 0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 9999px;
+            padding: 0.75rem 2rem;
+            border: 1px solid hsl(var(--border));
+            box-shadow: var(--shadow-card);
+            min-width: 600px;
+            justify-content: center;
+        }
+
+        @media (min-width: 768px) {
+            .nav-menu { display: flex; }
+        }
+
+        .nav-item {
+            padding: 0.625rem 1.25rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: hsl(var(--muted-foreground));
+        }
+
+        .nav-item:hover {
+            color: hsl(var(--foreground));
+            background: hsl(var(--background-card) / 0.8);
+            transform: scale(1.05);
+        }
+
+        .nav-item.active {
+            background: hsl(var(--primary));
+            color: hsl(var(--primary-foreground));
+            box-shadow: var(--shadow-glow);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, hsl(var(--background)) 0%, hsl(var(--primary) / 0.05) 50%, hsl(var(--background)) 100%);
+        }
+
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at center, hsl(var(--primary) / 0.1) 0%, transparent 50%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 8vw, 8rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 2rem;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.25rem, 3vw, 2.5rem);
+            margin-bottom: 1rem;
+            color: hsl(var(--muted-foreground));
+        }
+
+        .hero-description {
+            font-size: clamp(1.125rem, 2.5vw, 2rem);
+            font-style: italic;
+            color: hsl(var(--muted-foreground));
+            font-weight: 300;
+            margin-bottom: 3rem;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-indicator-inner {
+            width: 1.5rem;
+            height: 2.5rem;
+            border: 2px solid hsl(var(--primary) / 0.5);
+            border-radius: 9999px;
+            display: flex;
+            justify-content: center;
+            background: hsl(var(--background-card) / 0.3);
+            backdrop-filter: blur(4px);
+        }
+
+        .scroll-dot {
+            width: 0.25rem;
+            height: 0.75rem;
+            background: hsl(var(--primary));
+            border-radius: 9999px;
+            margin-top: 0.5rem;
+            animation: pulse 2s infinite;
+            box-shadow: var(--shadow-glow);
+        }
+
+        /* Section Titles */
+        .section-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        /* Card Styles */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        /* Auto-scroll specific styles */
+        .brands-scroll,
+        .thumbnails-scroll,
+        .results-scroll {
+            animation: autoScroll 20s linear infinite;
+        }
+
+        .brands-scroll:hover,
+        .thumbnails-scroll:hover,
+        .results-scroll:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes autoScroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Video Types Pills */
+        .video-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 3rem;
+        }
+
+        .video-pill {
+            padding: 0.75rem 2rem;
+            border-radius: 9999px;
+            border: 2px solid hsl(var(--border));
+            background: transparent;
+            color: hsl(var(--muted-foreground));
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .video-pill:hover {
+            border-color: hsl(var(--primary) / 0.5);
+            color: hsl(var(--primary));
+            background: hsl(var(--background-card) / 0.5);
+            transform: scale(1.05);
+        }
+
+        .video-pill.active {
+            border-color: hsl(var(--primary));
+            background: hsl(var(--primary));
+            color: hsl(var(--primary-foreground));
+            box-shadow: var(--shadow-glow);
+        }
+
+        /* Footer */
+        .footer {
+            background: hsl(var(--background-card));
+            border-top: 1px solid hsl(var(--border));
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand {
+            grid-column: span 2;
+        }
+
+        @media (max-width: 768px) {
+            .footer-brand { grid-column: span 1; }
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .footer-links h4 {
+            color: hsl(var(--foreground));
+            font-weight: 600;
+            font-size: 1.125rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links a {
+            color: hsl(var(--muted-foreground));
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-size: 0.875rem;
+        }
+
+        .footer-links a:hover {
+            color: hsl(var(--primary));
+            text-decoration: underline;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-link {
+            width: 3rem;
+            height: 3rem;
+            background: hsl(var(--background-alt));
+            border: 1px solid hsl(var(--border));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.25rem;
+        }
+
+        .social-link:hover {
+            background: hsl(var(--primary) / 0.2);
+            border-color: hsl(var(--primary) / 0.3);
+            transform: scale(1.1);
+        }
+
+        /* Newsletter */
+        .newsletter {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            padding: 2rem 0;
+            border-top: 1px solid hsl(var(--border));
+            border-bottom: 1px solid hsl(var(--border));
+        }
+
+        @media (min-width: 768px) {
+            .newsletter {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 0.75rem;
+            flex-direction: column;
+        }
+
+        @media (min-width: 640px) {
+            .newsletter-form { flex-direction: row; }
+        }
+
+        .newsletter-input {
+            padding: 0.75rem 1rem;
+            background: hsl(var(--background-alt));
+            border: 1px solid hsl(var(--border));
+            border-radius: 0.5rem;
+            color: hsl(var(--foreground));
+            min-width: 280px;
+        }
+
+        .newsletter-input::placeholder {
+            color: hsl(var(--muted-foreground));
+        }
+
+        .newsletter-input:focus {
+            outline: none;
+            border-color: hsl(var(--primary) / 0.5);
+            box-shadow: 0 0 0 2px hsl(var(--primary) / 0.2);
+        }
+
+        /* Footer Bottom */
+        .footer-bottom {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            padding: 1.5rem 0;
+            text-align: center;
+            color: hsl(var(--muted-foreground));
+            font-size: 0.875rem;
+        }
+
+        @media (min-width: 768px) {
+            .footer-bottom {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                text-align: left;
+            }
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+        }
+
+        @media (min-width: 768px) {
+            .footer-bottom-links { justify-content: flex-end; }
+        }
+
+        /* Animations */
+        @keyframes bounce {
+            0%, 20%, 53%, 80%, 100% { transform: translateY(0) translateX(-50%); }
+            40%, 43% { transform: translateY(-15px) translateX(-50%); }
+            70% { transform: translateY(-7px) translateX(-50%); }
+            90% { transform: translateY(-3px) translateX(-50%); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 640px) {
+            .section { padding: 3rem 0; }
+            .hero-content { padding: 0 1rem; }
+            .container { padding: 0 1rem; }
+        }
+
+        /* High contrast for accessibility */
+        @media (prefers-contrast: high) {
+            :root {
+                --background: 0 0% 0%;
+                --foreground: 0 0% 100%;
+                --border: 0 0% 50%;
+            }
+        }
+
+        /* Reduced motion for accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            
+            html { scroll-behavior: auto; }
+            .auto-scroll { animation: none; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav" id="navigation">
+        <div class="container">
+            <div class="nav-container">
+                <!-- Logo -->
+                <div class="nav-brand">
+                    <span style="color: hsl(var(--foreground));">UnCluttered</span><span style="color: hsl(var(--primary));">.Co</span>
+                </div>
+
+                <!-- Navigation Menu -->
+                <div class="nav-menu">
+                    <button class="nav-item active" onclick="scrollToSection('home')">Home</button>
+                    <button class="nav-item" onclick="scrollToSection('worked-for')">Worked For</button>
+                    <button class="nav-item" onclick="scrollToSection('work')">Work</button>
+                    <button class="nav-item" onclick="scrollToSection('video-types')">Videos</button>
+                    <button class="nav-item" onclick="scrollToSection('results')">Results</button>
+                    <button class="nav-item" onclick="scrollToSection('about')">About</button>
+                    <button class="nav-item" onclick="scrollToSection('testimonials')">Testimonials</button>
+                </div>
+
+                <!-- Mobile menu button -->
+                <button class="md:hidden p-2 rounded-lg" style="background: hsl(var(--background-card) / 0.5); border: 1px solid hsl(var(--border));">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-bg"></div>
+        
+        <div class="hero-content">
+            <div class="fade-in">
+                <h1 class="hero-title">
+                    <span style="color: hsl(var(--foreground));">UnCluttered</span><span class="glow-text" style="color: hsl(var(--primary));">.Co</span>
+                </h1>
+                
+                <div class="hero-subtitle">
+                    Hi, We as a company
+                </div>
+                
+                <div class="hero-subtitle" style="margin-bottom: 1.5rem;">
+                    Help <span class="glow-text" style="color: hsl(var(--primary)); font-weight: 700;">Creators</span> and <span class="glow-text" style="color: hsl(var(--primary)); font-weight: 700;">Founders</span> to go
+                </div>
+                
+                <div class="hero-description">
+                    From script to screen
+                </div>
+                
+                <button class="btn-primary" onclick="scrollToSection('worked-for')" style="font-size: 1.125rem; padding: 1.25rem 3rem;">
+                    Get Started Today
+                </button>
+            </div>
+        </div>
+
+        <div class="scroll-indicator">
+            <div class="scroll-indicator-inner">
+                <div class="scroll-dot"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section id="stats" class="section">
+        <div class="container">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; text-align: center;">
+                <div class="glass-card" style="padding: 2rem;">
+                    <div style="font-size: 3rem; font-weight: 900; color: hsl(var(--primary)); margin-bottom: 0.5rem;">500M+</div>
+                    <div style="color: hsl(var(--muted-foreground));">Total Views Generated</div>
+                </div>
+                <div class="glass-card" style="padding: 2rem;">
+                    <div style="font-size: 3rem; font-weight: 900; color: hsl(var(--primary)); margin-bottom: 0.5rem;">1000+</div>
+                    <div style="color: hsl(var(--muted-foreground));">Videos Created</div>
+                </div>
+                <div class="glass-card" style="padding: 2rem;">
+                    <div style="font-size: 3rem; font-weight: 900; color: hsl(var(--primary)); margin-bottom: 0.5rem;">100+</div>
+                    <div style="color: hsl(var(--muted-foreground));">Happy Clients</div>
+                </div>
+                <div class="glass-card" style="padding: 2rem;">
+                    <div style="font-size: 3rem; font-weight: 900; color: hsl(var(--primary)); margin-bottom: 0.5rem;">5M+</div>
+                    <div style="color: hsl(var(--muted-foreground));">Subscriber Growth</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Brands Section -->
+    <section id="worked-for" class="section">
+        <div class="container">
+            <h2 class="section-title">
+                <span style="color: hsl(var(--primary));">Creators and Brands</span>
+                <br>
+                <span style="color: hsl(var(--foreground));">worked for</span>
+            </h2>
+
+            <div class="auto-scroll brands-scroll" id="brandsScroll">
+                <!-- Brands will be duplicated for seamless scroll -->
+                <div class="auto-scroll-item">
+                    <div class="glass-card" style="padding: 2rem; text-align: center; height: 200px; display: flex; flex-direction: column; justify-content: center;">
+                        <div style="width: 60px; height: 60px; border-radius: 50%; background: hsl(var(--primary) / 0.2); margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; border: 2px solid hsl(var(--primary) / 0.2);">
+                            <span style="font-size: 1.5rem; font-weight: 700; color: hsl(var(--primary));">A</span>
+                        </div>
+                        <h3 style="color: hsl(var(--foreground)); font-weight: 700; margin-bottom: 0.5rem;">Amazon Home India</h3>
+                        <p style="color: hsl(var(--muted-foreground)); font-size: 0.875rem;">E-commerce Giant</p>
+                    </div>
+                </div>
+                <div class="auto-scroll-item">
+                    <div class="glass-card" style="padding: 2rem; text-align: center; height: 200px; display: flex; flex-direction: column; justify-content: center;">
+                        <div style="width: 60px; height: 60px; border-radius: 50%; background: hsl(var(--primary) / 0.2); margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; border: 2px solid hsl(var(--primary) / 0.2);">
+                            <span style="font-size: 1.5rem; font-weight: 700; color: hsl(var(--primary));">P</span>
+                        </div>
+                        <h3 style="color: hsl(var(--foreground)); font-weight: 700; margin-bottom: 0.5rem;">Personal touch Skincare</h3>
+                        <p style="color: hsl(var(--muted-foreground)); font-size: 0.875rem;">Beauty & Skincare</p>
+                    </div>
+                </div>
+                <div class="auto-scroll-item">
+                    <div class="glass-card" style="padding: 2rem; text-align: center; height: 200px; display: flex; flex-direction: column; justify-content: center;">
+                        <div style="width: 60px; height: 60px; border-radius: 50%; background: hsl(var(--primary) / 0.2); margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; border: 2px solid hsl(var(--primary) / 0.2);">
+                            <span style="font-size: 1.5rem; font-weight: 700; color: hsl(var(--primary));">L</span>
+                        </div>
+                        <h3 style="color: hsl(var(--foreground)); font-weight: 700; margin-bottom: 0.5rem;">Layers (Tech Burner x iplix)</h3>
+                        <p style="color: hsl(var(--muted-foreground)); font-size: 0.875rem;">Tech Content</p>
+                    </div>
+                </div>
+                <div class="auto-scroll-item">
+                    <div class="glass-card" style="padding: 2rem; text-align: center; height: 200px; display: flex; flex-direction: column; justify-content: center;">
+                        <div style="width: 60px; height: 60px; border-radius: 50%; background: hsl(var(--primary) / 0.2); margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; border: 2px solid hsl(var(--primary) / 0.2);">
+                            <span style="font-size: 1.5rem; font-weight: 700; color: hsl(var(--primary));">T</span>
+                        </div>
+                        <h3 style="color: hsl(var(--foreground)); font-weight: 700; margin-bottom: 0.5rem;">The Sham Sharma Show</h3>
+                        <p style="color: hsl(var(--muted-foreground)); font-size: 0.875rem;">Political Commentary</p>
+                    </div>
+                </div>
+                <!-- Duplicate for seamless scroll -->
+                <div class="auto-scroll-item">
+                    <div class="glass-card" style="padding: 2rem; text-align: center; height: 200px; display: flex; flex-direction: column; justify-content: center;">
+                        <div style="width: 60px; height: 60px; border-radius: 50%; background: hsl(var(--primary) / 0.2); margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; border: 2px solid hsl(var(--primary) / 0.2);">
+                            <span style="font-size: 1.5rem; font-weight: 700; color: hsl(var(--primary));">A</span>
+                        </div>
+                        <h3 style="color: hsl(var(--foreground)); font-weight: 700; margin-bottom: 0.5rem;">Amazon Home India</h3>
+                        <p style="color: hsl(var(--muted-foreground)); font-size: 0.875rem;">E-commerce Giant</p>
+                    </div>
+                </div>
+                <div class="auto-scroll-item">
+                    <div class="glass-card" style="padding: 2rem; text-align: center; height: 200px; display: flex; flex-direction: column; justify-content: center;">
+                        <div style="width: 60px; height: 60px; border-radius: 50%; background: hsl(var(--primary) / 0.2); margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; border: 2px solid hsl(var(--primary) / 0.2);">
+                            <span style="font-size: 1.5rem; font-weight: 700; color: hsl(var(--primary));">P</span>
+                        </div>
+                        <h3 style="color: hsl(var(--foreground)); font-weight: 700; margin-bottom: 0.5rem;">Personal touch Skincare</h3>
+                        <p style="color: hsl(var(--muted-foreground)); font-size: 0.875rem;">Beauty & Skincare</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Thumbnails Section -->
+    <section id="work" class="section" style="background: hsl(var(--background-alt));">
+        <div class="container">
+            <h2 class="section-title">
+                <span style="color: hsl(var(--foreground));">Delivering </span>
+                <span style="color: hsl(var(--primary)); font-style: italic;">Extraordinary</span>
+                <span style="color: hsl(var(--foreground));"> Thumbnail</span>
+                <br>
+                <span style="color: hsl(var(--foreground));">Every Single Time.</span>
+            </h2>
+
+            <div class="auto-scroll thumbnails-scroll" id="thumbnailsScroll">
+                <!-- Thumbnails will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Types Section -->
+    <section id="video-types" class="section">
+        <div class="container">
+            <h2 class="section-title">
+                <span style="color: hsl(var(--foreground));">Video That </span>
+                <span style="color: hsl(var(--primary)); font-style: italic;">Hooks</span>
+            </h2>
+
+            <div class="video-pills">
+                <button class="video-pill active" onclick="changeVideoType('Reels', this)">Reels</button>
+                <button class="video-pill" onclick="changeVideoType('Podcast', this)">Podcast</button>
+                <button class="video-pill" onclick="changeVideoType('Talking Head', this)">Talking Head</button>
+                <button class="video-pill" onclick="changeVideoType('Motion Graphic', this)">Motion Graphic</button>
+            </div>
+
+            <div class="card-grid" id="videoCards">
+                <!-- Video cards will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section id="results" class="section" style="background: hsl(var(--background-alt));">
+        <div class="container">
+            <h2 class="section-title" style="color: hsl(var(--foreground));">
+                Results
+            </h2>
+
+            <div class="auto-scroll results-scroll" id="resultsScroll">
+                <!-- Results will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section id="process" class="section">
+        <div class="container">
+            <h2 class="section-title">
+                <span style="color: hsl(var(--foreground));">Our </span>
+                <span style="color: hsl(var(--primary)); font-style: italic;">Process</span>
+            </h2>
+
+            <div class="card-grid">
+                <div class="glass-card" style="padding: 2rem; text-align: center;">
+                    <div style="width: 80px; height: 80px; background: hsl(var(--primary) / 0.2); border-radius: 50%; margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center;">
+                        <span style="font-size: 2rem;">📝</span>
+                    </div>
+                    <h3 style="color: hsl(var(--foreground)); font-weight: 700; margin-bottom: 1rem; font-size: 1.25rem;">Script Analysis</h3>
+                    <p style="color: hsl(var(--muted-foreground));">We analyze your content and understand your brand voice to create compelling narratives.</p>
+                </div>
+                <div class="glass-card" style="padding: 2rem; text-align: center;">
+                    <div style="width: 80px; height: 80px; background: hsl(var(--primary) / 0.2); border-radius: 50%; margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center;">
+                        <span style="font-size: 2rem;">🎬</span>
+                    </div>
+                    <h3 style="color: hsl(var(--foreground)); font-weight: 700; margin-bottom: 1rem; font-size: 1.25rem;">Production</h3>
+                    <p style="color: hsl(var(--muted-foreground));">Professional video production with high-quality equipment and expert team.</p>
+                </div>
+                <div class="glass-card" style="padding: 2rem; text-align: center;">
+                    <div style="width: 80px; height: 80px; background: hsl(var(--primary) / 0.2); border-radius: 50%; margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center;">
+                        <span style="font-size: 2rem;">✂️</span>
+                    </div>
+                    <h3 style="color: hsl(var(--foreground)); font-weight: 700; margin-bottom: 1rem; font-size: 1.25rem;">Post Production</h3>
+                    <p style="color: hsl(var(--muted-foreground));">Expert editing, color grading, and sound design to bring your vision to life.</p>
+                </div>
+                <div class="glass-card" style="padding: 2rem; text-align: center;">
+                    <div style="width: 80px; height: 80px; background: hsl(var(--primary) / 0.2); border-radius: 50%; margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center;">
+                        <span style="font-size: 2rem;">🚀</span>
+                    </div>
+                    <h3 style="color: hsl(var(--foreground)); font-weight: 700; margin-bottom: 1rem; font-size: 1.25rem;">Delivery</h3>
+                    <p style="color: hsl(var(--muted-foreground));">Final delivery with multiple formats optimized for different platforms and audiences.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="about" class="section" style="background: hsl(var(--background-alt));">
+        <div class="container">
+            <h2 class="section-title">
+                <span style="color: hsl(var(--foreground));">Meet Our </span>
+                <span style="color: hsl(var(--primary)); font-style: italic;">Team</span>
+            </h2>
+
+            <div class="card-grid">
+                <div class="glass-card" style="padding: 2rem; text-align: center;">
+                    <div style="width: 120px; height: 120px; background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow))); border-radius: 50%; margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center;">
+                        <span style="font-size: 3rem; color: hsl(var(--primary-foreground));">👨‍💼</span>
+                    </div>
+                    <h3 style="color: hsl(var(--foreground)); font-weight: 700; margin-bottom: 0.5rem; font-size: 1.25rem;">Harsh</h3>
+                    <p style="color: hsl(var(--primary)); font-weight: 600; margin-bottom: 1rem;">Creative Director</p>
+                    <p style="color: hsl(var(--muted-foreground)); font-size: 0.875rem;">Leading creative vision with 10+ years of experience in video production and brand storytelling.</p>
+                </div>
+                <div class="glass-card" style="padding: 2rem; text-align: center;">
+                    <div style="width: 120px; height: 120px; background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow))); border-radius: 50%; margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center;">
+                        <span style="font-size: 3rem; color: hsl(var(--primary-foreground));">👩‍🎨</span>
+                    </div>
+                    <h3 style="color: hsl(var(--foreground)); font-weight: 700; margin-bottom: 0.5rem; font-size: 1.25rem;">Sangam</h3>
+                    <p style="color: hsl(var(--primary)); font-weight: 600; margin-bottom: 1rem;">Lead Editor</p>
+                    <p style="color: hsl(var(--muted-foreground)); font-size: 0.875rem;">Expert in post-production with a keen eye for detail and storytelling through visual editing.</p>
+                </div>
+                <div class="glass-card" style="padding: 2rem; text-align: center;">
+                    <div style="width: 120px; height: 120px; background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow))); border-radius: 50%; margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center;">
+                        <span style="font-size: 3rem; color: hsl(var(--primary-foreground));">👨‍💻</span>
+                    </div>
+                    <h3 style="color: hsl(var(--foreground)); font-weight: 700; margin-bottom: 0.5rem; font-size: 1.25rem;">Azhar</h3>
+                    <p style="color: hsl(var(--primary)); font-weight: 600; margin-bottom: 1rem;">Motion Graphics Artist</p>
+                    <p style="color: hsl(var(--muted-foreground)); font-size: 0.875rem;">Specializing in animation and motion graphics that bring brands to life with dynamic visuals.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="section">
+        <div class="container">
+            <h2 class="section-title">
+                <span style="color: hsl(var(--foreground));">What Our </span>
+                <span style="color: hsl(var(--primary)); font-style: italic;">Clients</span>
+                <span style="color: hsl(var(--foreground));"> Say</span>
+            </h2>
+
+            <div class="card-grid">
+                <div class="glass-card" style="padding: 2rem;">
+                    <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                        <div style="width: 60px; height: 60px; background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow))); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                            <span style="font-size: 1.5rem; color: hsl(var(--primary-foreground));">👨‍💼</span>
+                        </div>
+                        <div>
+                            <h4 style="color: hsl(var(--foreground)); font-weight: 700;">Alex Rodriguez</h4>
+                            <p style="color: hsl(var(--muted-foreground)); font-size: 0.875rem;">Tech Startup Founder</p>
+                        </div>
+                    </div>
+                    <p style="color: hsl(var(--muted-foreground)); font-style: italic; margin-bottom: 1rem;">"UnCluttered.co transformed our brand story into compelling videos that drove 300% more engagement. Their attention to detail is unmatched."</p>
+                    <div style="color: hsl(var(--primary));">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="glass-card" style="padding: 2rem;">
+                    <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                        <div style="width: 60px; height: 60px; background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow))); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                            <span style="font-size: 1.5rem; color: hsl(var(--primary-foreground));">👩‍🎤</span>
+                        </div>
+                        <div>
+                            <h4 style="color: hsl(var(--foreground)); font-weight: 700;">Emma Williams</h4>
+                            <p style="color: hsl(var(--muted-foreground)); font-size: 0.875rem;">Content Creator</p>
+                        </div>
+                    </div>
+                    <p style="color: hsl(var(--muted-foreground)); font-style: italic; margin-bottom: 1rem;">"Working with UnCluttered.Co was a game-changer. They understood my vision and delivered content that resonated perfectly with my audience."</p>
+                    <div style="color: hsl(var(--primary));">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="glass-card" style="padding: 2rem;">
+                    <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                        <div style="width: 60px; height: 60px; background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow))); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                            <span style="font-size: 1.5rem; color: hsl(var(--primary-foreground));">👨‍🏫</span>
+                        </div>
+                        <div>
+                            <h4 style="color: hsl(var(--foreground)); font-weight: 700;">David Park</h4>
+                            <p style="color: hsl(var(--muted-foreground)); font-size: 0.875rem;">Educational Platform</p>
+                        </div>
+                    </div>
+                    <p style="color: hsl(var(--muted-foreground)); font-style: italic; margin-bottom: 1rem;">"The quality and professionalism exceeded our expectations. Our course completion rates increased by 150% after implementing their video content."</p>
+                    <div style="color: hsl(var(--primary));">⭐⭐⭐⭐⭐</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <!-- Main Footer Content -->
+            <div style="padding: 4rem 0;">
+                <div class="footer-grid">
+                    <!-- Brand Section -->
+                    <div class="footer-brand">
+                        <div style="margin-bottom: 1.5rem;">
+                            <h3 style="font-size: 2rem; font-weight: 900; margin-bottom: 1rem;">
+                                <span style="color: hsl(var(--foreground));">UnCluttered</span><span class="glow-text" style="color: hsl(var(--primary));">.Co</span>
+                            </h3>
+                            <p style="color: hsl(var(--muted-foreground)); line-height: 1.6; max-width: 400px;">
+                                Helping creators and founders transform their vision from script to screen with 
+                                professional video production and content creation services.
+                            </p>
+                        </div>
+                        
+                        <!-- Social Links -->
+                        <div class="social-links">
+                            <a href="#" target="_blank" class="social-link" aria-label="Instagram">📸</a>
+                            <!-- <a href="#" target="_blank" class="social-link" aria-label="YouTube">📺</a> -->
+                            <a href="#" target="_blank" class="social-link" aria-label="LinkedIn">💼</a>
+                            <a href="#" target="_blank" class="social-link" aria-label="Twitter/X">🐦</a>
+                        </div>
+                    </div>
+
+                    <!-- Services Links -->
+                    <!-- <div>
+                        <div class="footer-links">
+                            <h4>Services</h4>
+                            <a href="#">Video Production</a>
+                            <a href="#">Content Creation</a>
+                            <a href="#">Brand Strategy</a>
+                            <a href="#">Social Media</a>
+                        </div>
+                    </div> -->
+
+                    <!-- Company Links -->
+                    <div>
+                        <div class="footer-links">
+                            <h4>Company</h4>
+                            <a href="#about">About Us</a>
+                            <a href="#process">Our Process</a>
+                            <a href="#testimonials">Testimonials</a>
+                            <a href="#">Contact</a>
+                        </div>
+                    </div>
+
+                    <!-- Resources Links -->
+                    <!-- <div>
+                        <div class="footer-links">
+                            <h4>Resources</h4>
+                            <a href="#">Blog</a>
+                            <a href="#results">Case Studies</a>
+                            <a href="#work">Portfolio</a>
+                            <a href="#">FAQ</a>
+                        </div>
+                    </div> -->
+
+                    <!-- Legal Links -->
+                    <!-- <div>
+                        <div class="footer-links">
+                            <h4>Legal</h4>
+                            <a href="#">Privacy Policy</a>
+                            <a href="#">Terms of Service</a>
+                            <a href="#">Cookie Policy</a>
+                            <a href="#">GDPR</a>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+
+            <!-- Newsletter Section -->
+            <div class="newsletter">
+                <div style="text-align: center;">
+                    <h4 style="color: hsl(var(--foreground)); font-weight: 600; font-size: 1.125rem; margin-bottom: 0.5rem;">Stay Updated</h4>
+                    <p style="color: hsl(var(--muted-foreground)); font-size: 0.875rem;">
+                        Get the latest insights on video production and content creation.
+                    </p>
+                </div>
+                
+                <div class="newsletter-form">
+                    <input
+                        type="email"
+                        placeholder="Enter your email"
+                        class="newsletter-input"
+                    />
+                    <button class="btn-primary" style="padding: 0.75rem 1.5rem; white-space: nowrap;">
+                        Subscribe
+                    </button>
+                </div>
+            </div>
+
+            <!-- Bottom Bar -->
+            <div class="footer-bottom">
+                <div style="color: hsl(var(--muted-foreground)); font-size: 0.875rem;">
+                    © 2024 UnCluttered.Co. All rights reserved. Made By <a href="https://www.instagram.com/iam.azhhar/" target="_blank" style="color: hsl(var(--muted-foreground));">Azhar</a>.
+                </div>
+                
+                <!-- <div class="footer-bottom-links">
+                    <a href="#" style="color: hsl(var(--muted-foreground)); text-decoration: none;">Privacy</a>
+                    <a href="#" style="color: hsl(var(--muted-foreground)); text-decoration: none;">Terms</a>
+                    <a href="#" style="color: hsl(var(--muted-foreground)); text-decoration: none;">Cookies</a>
+                </div> -->
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navigation functionality
+        let activeSection = 'home';
+        
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Update active navigation item
+        function updateActiveNavItem() {
+            const navItems = document.querySelectorAll('.nav-item');
+            const sections = ['home', 'worked-for', 'work', 'video-types', 'results', 'about', 'testimonials'];
+            
+            let current = 'home';
+            for (const sectionId of sections) {
+                const element = document.getElementById(sectionId);
+                if (element) {
+                    const rect = element.getBoundingClientRect();
+                    if (rect.top <= 100 && rect.bottom >= 100) {
+                        current = sectionId;
+                    }
+                }
+            }
+            
+            if (current !== activeSection) {
+                activeSection = current;
+                navItems.forEach(item => {
+                    item.classList.remove('active');
+                    if (item.textContent.toLowerCase().includes(current.replace('-', ' ')) || 
+                        (current === 'home' && item.textContent === 'Home') ||
+                        (current === 'worked-for' && item.textContent === 'Worked for') ||
+                        (current === 'work' && item.textContent === 'Work') ||
+                        (current === 'video-types' && item.textContent === 'Videos') ||
+                        (current === 'results' && item.textContent === 'Results') ||
+                        (current === 'about' && item.textContent === 'About') ||
+                        (current === 'testimonials' && item.textContent === 'Testimonials')) {
+                        item.classList.add('active');
+                    }
+                });
+            }
+        }
+
+        // Handle scroll events
+        function handleScroll() {
+            const nav = document.getElementById('navigation');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+            updateActiveNavItem();
+        }
+
+        // Video types functionality
+        const videoCardsData = {
+            'Reels': [
+                { title: 'Instagram Reels', description: 'Viral 15-30s vertical videos' },
+                { title: 'TikTok Content', description: 'Trending short-form videos' },
+                { title: 'YouTube Shorts', description: 'Quick engaging content' },
+                { title: 'Story Content', description: 'Behind-the-scenes clips' },
+                { title: 'Product Demos', description: 'Quick product showcases' },
+                { title: 'Tutorial Clips', description: 'Bite-sized tutorials' }
+            ],
+            'Podcast': [
+                { title: 'Interview Highlights', description: 'Best moments from interviews' },
+                { title: 'Topic Discussions', description: 'Deep-dive conversations' },
+                { title: 'Q&A Sessions', description: 'Audience question answers' },
+                { title: 'Expert Panels', description: 'Multi-person discussions' },
+                { title: 'Solo Commentary', description: 'Personal insights and thoughts' },
+                { title: 'News Analysis', description: 'Current events breakdown' }
+            ],
+            'Talking Head': [
+                { title: 'CEO Messages', description: 'Executive communications' },
+                { title: 'Training Videos', description: 'Educational content delivery' },
+                { title: 'Testimonials', description: 'Customer success stories' },
+                { title: 'Product Updates', description: 'Feature announcements' },
+                { title: 'Company Culture', description: 'Team and values showcase' },
+                { title: 'Expert Opinions', description: 'Industry insights' }
+            ],
+            'Motion Graphic': [
+                { title: 'Explainer Videos', description: 'Complex concepts simplified' },
+                { title: 'Data Visualization', description: 'Statistics and analytics' },
+                { title: 'Brand Animations', description: 'Logo and brand elements' },
+                { title: 'Infographic Videos', description: 'Information graphics' },
+                { title: 'Process Flows', description: 'Step-by-step guides' },
+                { title: 'Abstract Concepts', description: 'Creative visual storytelling' }
+            ]
+        };
+
+        function changeVideoType(type, button) {
+            // Update active pill
+            document.querySelectorAll('.video-pill').forEach(pill => pill.classList.remove('active'));
+            button.classList.add('active');
+            
+            // Update cards
+            const cardsContainer = document.getElementById('videoCards');
+            const cards = videoCardsData[type];
+            
+            cardsContainer.innerHTML = cards.map(card => `
+                <div class="glass-card" style="padding: 2rem; height: 240px; display: flex; flex-direction: column; justify-content: center;">
+                    <div style="width: 100%; height: 120px; background: linear-gradient(135deg, hsl(var(--primary) / 0.1), hsl(var(--primary) / 0.05)); border-radius: 12px; margin-bottom: 1rem; position: relative; overflow: hidden; border: 1px solid hsl(var(--border));">
+                        <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;">
+                            <div style="width: 48px; height: 48px; background: hsl(var(--primary) / 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                <div style="width: 0; height: 0; border-left: 12px solid hsl(var(--primary)); border-top: 8px solid transparent; border-bottom: 8px solid transparent; margin-left: 4px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="text-align: center;">
+                        <h3 style="color: hsl(var(--foreground)); font-weight: 700; margin-bottom: 0.5rem; font-size: 1.125rem;">${card.title}</h3>
+                        <p style="color: hsl(var(--muted-foreground)); font-size: 0.875rem;">${card.description}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Initialize thumbnails
+        function initializeThumbnails() {
+            const thumbnails = [
+                { title: '₹2000 PER MONTH', creator: '@Sanjay_Kathuria', category: 'Finance', views: '1M+', bgColor: 'linear-gradient(135deg, #dc2626, #991b1b)' },
+                { title: 'Dangerous', creator: '@theshamsharmashow', category: 'Documentary', views: '3.9M+', bgColor: 'linear-gradient(135deg, #ea580c, #c2410c)' },
+                { title: '8 Serious Mistakes', creator: '@prashantodesai', category: 'Nutrition', views: '5K+', bgColor: 'linear-gradient(135deg, #d97706, #92400e)' },
+                { title: '100s of Leads in seconds!', creator: '@techburner', category: 'Business', views: '2.1M+', bgColor: 'linear-gradient(135deg, #059669, #0d9488)' },
+                { title: 'Ultimate MELTDOWNS', creator: '@contentcreator', category: 'Entertainment', views: '850K+', bgColor: 'linear-gradient(135deg, #9333ea, #c026d3)' },
+                { title: 'PAKISTAN Is NEXT!', creator: '@newsanalyst', category: 'News', views: '4.2M+', bgColor: 'linear-gradient(135deg, #2563eb, #4338ca)' }
+            ];
+
+            const container = document.getElementById('thumbnailsScroll');
+            const duplicatedThumbnails = [...thumbnails, ...thumbnails]; // Duplicate for seamless scroll
+            
+            container.innerHTML = duplicatedThumbnails.map(thumbnail => `
+                <div class="auto-scroll-item" style="min-width: 360px;">
+                    <div class="glass-card" style="padding: 1rem;">
+                        <div style="width: 100%; height: 200px; background: ${thumbnail.bgColor}; border-radius: 12px; margin-bottom: 1rem; position: relative; overflow: hidden;">
+                            <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: 1.5rem;">
+                                <div style="text-align: center;">
+                                    <div style="color: white; font-weight: 900; font-size: 1.5rem; margin-bottom: 0.5rem; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">
+                                        ${thumbnail.title}
+                                    </div>
+                                    <div style="color: rgba(255,255,255,0.8); font-size: 0.875rem;">
+                                        ${thumbnail.creator}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; justify-content: space-between;">
+                            <div>
+                                <div style="color: hsl(var(--muted-foreground)); font-size: 0.875rem; font-weight: 500; margin-bottom: 0.25rem;">
+                                    ${thumbnail.creator}
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <span style="padding: 0.25rem 0.75rem; background: hsl(var(--primary) / 0.2); color: hsl(var(--primary)); font-size: 0.75rem; font-weight: 500; border-radius: 9999px;">
+                                        ${thumbnail.category}
+                                    </span>
+                                    <span style="color: hsl(var(--muted-foreground)); font-size: 0.75rem; display: flex; align-items: center; gap: 0.25rem;">
+                                        <div style="width: 8px; height: 8px; background: #10b981; border-radius: 50%;"></div>
+                                        ${thumbnail.views} Views
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Initialize results
+        function initializeResults() {
+            const results = [
+                { title: 'How to Start SIP in Mutual Funds | Begin', creator: '@Sanjay_Kathuria', views: '1M+', category: 'Finance', bgColor: 'linear-gradient(135deg, #dc2626, #991b1b)', featured: false },
+                { title: 'Ultimate MELTDOWNS After HISTORIC Waqf', creator: '@theshamsharmashow', views: '3.9M+', category: 'Documentary', bgColor: 'linear-gradient(135deg, #ea580c, #eab308)', featured: true },
+                { title: '8 Serious Mistakes You\'re Making When', creator: '@prashantodesai', views: '5K', category: 'Nutrition', bgColor: 'linear-gradient(135deg, #059669, #2563eb)', featured: false },
+                { title: 'DANGEROUS Chemical in Your Food', creator: '@healthexpert', views: '2.1M+', category: 'Health', bgColor: 'linear-gradient(135deg, #9333ea, #ec4899)', featured: false },
+                { title: 'Pakistan Is NEXT! | Analysis', creator: '@newsanalyst', views: '4.2M+', category: 'News', bgColor: 'linear-gradient(135deg, #2563eb, #4338ca)', featured: false }
+            ];
+
+            const container = document.getElementById('resultsScroll');
+            const duplicatedResults = [...results, ...results]; // Duplicate for seamless scroll
+            
+            container.innerHTML = duplicatedResults.map(result => `
+                <div class="auto-scroll-item" style="min-width: ${result.featured ? '480px' : '360px'};">
+                    <div class="glass-card" style="padding: 1rem; ${result.featured ? 'border: 2px solid hsl(var(--primary) / 0.3); transform: scale(1.05);' : ''}">
+                        <div style="width: 100%; height: ${result.featured ? '240px' : '200px'}; background: ${result.bgColor}; border-radius: 12px; margin-bottom: 1rem; position: relative; overflow: hidden;">
+                            <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: 1.5rem;">
+                                <div style="text-align: center;">
+                                    <div style="color: white; font-weight: 900; font-size: ${result.featured ? '2rem' : '1.25rem'}; margin-bottom: 0.5rem; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">
+                                        ${result.title}
+                                    </div>
+                                    <div style="color: rgba(255,255,255,0.8); font-size: 0.875rem;">
+                                        ${result.creator}
+                                    </div>
+                                </div>
+                            </div>
+                            ${result.featured ? '<div style="position: absolute; top: 1rem; right: 1rem; background: hsl(var(--primary) / 0.9); color: hsl(var(--primary-foreground)); padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 700;">FEATURED</div>' : ''}
+                        </div>
+                        <div style="display: flex; align-items: center; justify-content: space-between;">
+                            <div>
+                                <div style="color: hsl(var(--muted-foreground)); font-size: 0.875rem; font-weight: 500; margin-bottom: 0.25rem;">
+                                    ${result.creator}
+                                </div>
+                                <span style="padding: 0.25rem 0.75rem; background: hsl(var(--primary) / 0.2); color: hsl(var(--primary)); font-size: 0.75rem; font-weight: 500; border-radius: 9999px;">
+                                    ${result.category}
+                                </span>
+                            </div>
+                            <div style="text-align: right;">
+                                <div style="color: hsl(var(--primary)); font-weight: 700; font-size: 1.125rem; display: flex; align-items: center; gap: 0.25rem;">
+                                    <div style="width: 8px; height: 8px; background: #10b981; border-radius: 50%; animation: pulse 2s infinite;"></div>
+                                    ${result.views} Views
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set up scroll listener
+            window.addEventListener('scroll', handleScroll);
+            
+            // Initialize sections
+            initializeThumbnails();
+            initializeResults();
+            changeVideoType('Reels', document.querySelector('.video-pill.active'));
+            
+            // Initial scroll position check
+            handleScroll();
+        });
+    </script>
+</body>
+</html>

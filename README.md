@@ -1,39 +1,73 @@
-# Uncluttered.Co 🎨  
-**Creative Designer for YouTube Thumbnails & Social Media**
+# Welcome to your Lovable project
 
-## 🚀 About Us
+## Project info
 
-**Uncluttered.co** is a creative content agency that specializes in high-converting **YouTube thumbnails** and **social media design**. With over **100 million views generated**, we know the secret to capturing attention and driving engagement in a competitive digital world.
+**URL**: https://lovable.dev/projects/50b779d6-20cb-457a-ac86-253abb0c6c44
 
-Whether you're a content creator, brand, or agency, our designs are tailored to stand out and convert—helping you grow your audience and achieve real results.
+## How can I edit this code?
 
-## 💡 What We Do
+There are several ways of editing your application.
 
-- 🎯 **YouTube Thumbnail Design**  
-  Eye-catching, optimized thumbnails that increase click-through rates and video performance.
+**Use Lovable**
 
-- 📱 **Social Media Design**  
-  Branded, scroll-stopping content for platforms like Instagram, Twitter/X, TikTok, and more.
+Simply visit the [Lovable Project](https://lovable.dev/projects/50b779d6-20cb-457a-ac86-253abb0c6c44) and start prompting.
 
-- 🧠 **Content Strategy Support**  
-  Visual direction to align with your branding and messaging goals.
+Changes made via Lovable will be committed automatically to this repo.
 
-## 📈 Why Choose Us?
+**Use your preferred IDE**
 
-- ✅ Over **100M+ views** generated from our thumbnails
-- ✅ Designs rooted in data and viewer psychology
-- ✅ Fast turnaround & reliable communication
-- ✅ Proven track record in **YouTube growth & engagement**
+If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
 
-## 🔍 Keywords
+The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
 
-YouTube Thumbnails · Social Media Design · Creative Designer · Content Agency · YouTube Growth · Video Marketing · Branding · Viral Content · YouTube Strategy · Engagement
+Follow these steps:
 
-## 🌐 Contact
+```sh
+# Step 1: Clone the repository using the project's Git URL.
+git clone <YOUR_GIT_URL>
 
-🌍 **Website:** [uncluttered.co.in](https://uncluttered.co.in/)
+# Step 2: Navigate to the project directory.
+cd <YOUR_PROJECT_NAME>
 
----
+# Step 3: Install the necessary dependencies.
+npm i
 
-> "Clarity is the new creative. Keep it Uncluttered.co"
+# Step 4: Start the development server with auto-reloading and an instant preview.
+npm run dev
+```
 
+**Edit a file directly in GitHub**
+
+- Navigate to the desired file(s).
+- Click the "Edit" button (pencil icon) at the top right of the file view.
+- Make your changes and commit the changes.
+
+**Use GitHub Codespaces**
+
+- Navigate to the main page of your repository.
+- Click on the "Code" button (green button) near the top right.
+- Select the "Codespaces" tab.
+- Click on "New codespace" to launch a new Codespace environment.
+- Edit files directly within the Codespace and commit and push your changes once you're done.
+
+## What technologies are used for this project?
+
+This project is built with:
+
+- Vite
+- TypeScript
+- React
+- shadcn-ui
+- Tailwind CSS
+
+## How can I deploy this project?
+
+Simply open [Lovable](https://lovable.dev/projects/50b779d6-20cb-457a-ac86-253abb0c6c44) and click on Share -> Publish.
+
+## Can I connect a custom domain to my Lovable project?
+
+Yes, you can!
+
+To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+
+Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
